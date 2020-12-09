@@ -6,9 +6,12 @@ namespace CombSort
     {
         static void Main(string[] args)
         {            
-            Console.WriteLine("Введите размер массива.");
-            int N = int.Parse(Console.ReadLine());
-            int[] unsorted = new int[N];
+            int n;
+            Console.WriteLine("Введите размер массива:");
+            bool N = int.TryParse(Console.ReadLine(), out n);
+            if (N)
+            {
+                int[] unsorted = new int[n];
             Random rand = new Random();
             for (int i = 0; i < unsorted.Length; i++)
             {
@@ -33,7 +36,14 @@ namespace CombSort
             Console.WriteLine('\n');
             Console.ResetColor();
             Console.Write(string.Join(",", combSort(unsorted)));
+        
+            }
+            else 
+            {
+                Console.WriteLine("Ошибка: введено не целое число.");
+            }
         }
+            
         public static int[] combSort(int[] input)
         {
             double gap = input.Length;
