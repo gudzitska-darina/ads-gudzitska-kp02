@@ -8,14 +8,12 @@ namespace lab6
     {
         public static string ToRPN(string initialString)
         {
-
             Stack<char> operationsStack = new Stack<char>();
             char lastOperation;
  
             string result = string.Empty;
 
             initialString = initialString.Replace(" ", "");
- 
             for(int i = 0; i < initialString.Length; i++)
             {
                 if (Char.IsDigit(initialString[i]))
@@ -27,7 +25,6 @@ namespace lab6
                 {
                     if (!(operationsStack.Count == 0))
                         lastOperation = operationsStack.Peek();
-
                     else
                     {
                         operationsStack.Push(initialString[i]);
@@ -89,13 +86,6 @@ namespace lab6
     }
     class Program
     {
-        static bool StringContains(string input)
-        {
-            foreach(char c in input)
-                if(Char.IsNumber(c) || Char.IsSymbol(c))
-                    return true;
-            return false;
-        }
         static void Control()
         {
             string controlString = "1*2/(3+4-5)";
@@ -104,13 +94,31 @@ namespace lab6
         }
         static void ByUser()
         {
-            string userString = ReadLine();
-            if(!StringContains(userString))
+            WriteLine($"Для завершения ввода введите '.'");
+            string userString = string.Empty;
+            Stack<char> enter = new Stack<char>();
+            while(true)
             {
-                throw new Exception($"Введена НЕ цифра или знак.");
+                char lastOperation = ReadKey().KeyChar;
+                if(Char.IsNumber(lastOperation) || lastOperation == '+' || lastOperation == '-' 
+                    || lastOperation == '*' || lastOperation == '/' || lastOperation == '(' || lastOperation == ')')
+                {
+                    enter.Push(lastOperation);
+                    userString += char.ToString(lastOperation);
+                    WriteLine($"\nВаш пример: {userString}");
+                    continue;
+                }
+                else if(lastOperation == '.')
+                {
+                   WriteLine($"\nЗапись в обратной польськой нотации: {ReversePN.ToRPN(userString)}");
+                   break; 
+                }
+                else
+                {
+                    WriteLine($"\nВведен неверный символ!");
+                    continue;
+                }
             }
-            WriteLine($"Ваш пример: {userString}");
-            WriteLine($"Запись в обратной польськой нотации: {ReversePN.ToRPN(userString)}");
         }
 
         static void Main(string[] args)
