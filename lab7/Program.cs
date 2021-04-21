@@ -161,7 +161,6 @@ namespace lab7
                         Key keyRem = new Key();
                         keyRem.flightCode = sub[1];
                         Entry enRem = hashtable.FindEntry(keyRem);
-                        WriteLine(enRem.ToString());
                         Key gateKRem = new Key(enRem.value.gate);
                         checkGate.RemoveEntry(gateKRem);
 
